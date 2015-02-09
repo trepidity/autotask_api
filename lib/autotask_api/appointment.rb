@@ -6,7 +6,7 @@ module AutotaskAPI
       DateTime.strptime(:start_date_time, '%Y-%m-%dT%H:%M:%S')
     end
 
-    def format_start
+    def format_end
       DateTime.strptime(:end_date_time, '%Y-%m-%dT%H:%M:%S')
     end
 
