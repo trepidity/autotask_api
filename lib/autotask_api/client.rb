@@ -1,13 +1,14 @@
 module AutotaskAPI
   class Client
     NAMESPACE = 'http://autotask.net/ATWS/v1_5/'
-    attr_accessor :savon_client, :wsdl, :basic_auth, :query, :log
+    attr_accessor :savon_client, :wsdl, :basic_auth, :query, :log, :endpoint
 
     def initialize
       yield self
       self.savon_client ||= Savon.client do |c|
         c.basic_auth basic_auth
         c.wsdl wsdl
+        c.endpoint endpoint
         c.pretty_print_xml true
         c.log !!log
         c.read_timeout 30
