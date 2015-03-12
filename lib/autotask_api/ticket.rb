@@ -2,6 +2,10 @@ module AutotaskAPI
   class Ticket < Entity
     self.fields = [ :account_id, :assigned_resource_id, :ticket_number, :title, :description, :status ]
 
+    belongs_to :account
+    belongs_to :contact
+    belongs_to :service_call_ticket
+
     def assigned_resource
       return if assigned_resource_id.blank?
       Resource.find(assigned_resource_id)
