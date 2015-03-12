@@ -1,6 +1,6 @@
 module AutotaskAPI
   class Ticket < Entity
-    self.fields = [ :id, :account_id, :assigned_resource_id, :ticket_number, :title, :description, :status, :completed_date, :priority ]
+    self.fields = [ :id, :account_id, :contact_id, :assigned_resource_id, :ticket_number, :title, :description, :status, :completed_date, :priority ]
 
     belongs_to :account
     belongs_to :contact
