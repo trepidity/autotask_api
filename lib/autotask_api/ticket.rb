@@ -4,7 +4,7 @@ module AutotaskAPI
 
     belongs_to :account
     belongs_to :contact
-    belongs_to :service_call_ticket
+    has_one :service_call_ticket
 
     def assigned_resource
       return if assigned_resource_id.blank?
