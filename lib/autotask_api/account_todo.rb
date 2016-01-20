@@ -5,7 +5,7 @@ module AutotaskAPI
     self.fields = [ :id, :account_id, :action_type, :activity_description,
                     :completed_date, :start_date_time, :end_date_time,
                     :contact_id, :creator_resource_id, :create_date_time,
-                    :assigned_to_resource_id, :last_modified_date_time ]
+                    :assigned_to_resource_id, :last_modified_date ]
 
     belongs_to :account
     belongs_to :contact
