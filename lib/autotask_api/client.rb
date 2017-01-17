@@ -13,7 +13,7 @@ module AutotaskAPI
         c.log !!log
         c.read_timeout 30
         c.open_timeout 30
-        c.ssl_version :TLSv1_2
+        c.ssl_version :SSLv3
       end
       Entity.client ||= self
     end
