@@ -10,9 +10,11 @@ module AutotaskAPI
         c.wsdl wsdl
         c.endpoint endpoint
         c.pretty_print_xml true
-        c.log !!log
+        c.log true
+        c.log_level :debug
         c.read_timeout 30
         c.open_timeout 30
+        c.logger Rails.logger
         c.ssl_version :TLSv1_2
       end
       Entity.client ||= self
