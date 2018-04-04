@@ -22,17 +22,26 @@ module AutotaskAPI
 
     def response
       savon_client.call :query, message: query,
-        attributes: { xmlns: NAMESPACE }
+        attributes: { xmlns: NAMESPACE },
+                      soap_header: {
+                          'tns:AutotaskIntegrations' => {'tns:IntegrationCode' => ENV['IntegrationCode']}
+                      }
     end
 
     def update(xml)
       savon_client.call :update, message: "<Entities>#{xml}</Entities>",
-        attributes: { xmlns: NAMESPACE }
+        attributes: { xmlns: NAMESPACE },
+                      soap_header: {
+                          'tns:AutotaskIntegrations' => {'tns:IntegrationCode' => ENV['IntegrationCode']}
+                      }
     end
 
     def create(xml)
       savon_client.call :create, message: "<Entities>#{xml}</Entities>",
-        attributes: { xmlns: NAMESPACE }
+        attributes: { xmlns: NAMESPACE },
+                      soap_header: {
+                          'tns:AutotaskIntegrations' => {'tns:IntegrationCode' => ENV['IntegrationCode']}
+                      }
     end
 
     def entities_for(query)
@@ -50,16 +59,25 @@ module AutotaskAPI
     end
 
     def field_info(entity_name)
-      savon_client.call :get_field_info, message: { psObjectType: entity_name }
+      savon_client.call :get_field_info, message: { psObjectType: entity_name },
+                        soap_header: {
+                            'tns:AutotaskIntegrations' => {'tns:IntegrationCode' => ENV['IntegrationCode']}
+                        }
     end
 
     def udf_info(entity_name)
-      savon_client.call :get_udf_info, message: { psTable: entity_name }
+      savon_client.call :get_udf_info, message: { psTable: entity_name },
+                        soap_header: {
+                            'tns:AutotaskIntegrations' => {'tns:IntegrationCode' => ENV['IntegrationCode']}
+                        }
     end
 
     def zone_info(user_name = nil)
       savon_client.call :get_zone_info,
-        message: { 'UserName' => user_name || basic_auth.first }
+        message: { 'UserName' => user_name || basic_auth.first },
+                    soap_header: {
+                        'tns:AutotaskIntegrations' => {'tns:IntegrationCode' => ENV['IntegrationCode']}
+                    }
     end
   end
 end
