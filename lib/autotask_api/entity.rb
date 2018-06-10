@@ -30,7 +30,7 @@ module AutotaskAPI
         query.field = field
         query.expression = id
       end
-      find_cache[id] ||= client.entities_for(query).first
+      find_cache[id] ||= client.entities_for(query)
     end
 
     def self.belongs_to(name, options = {})
@@ -38,11 +38,20 @@ module AutotaskAPI
       klass = "AutotaskAPI::#{(options[:class_name] || name).to_s.classify}"
       foreign_key = name.foreign_key
       define_method name do
-        klass.constantize.find send(foreign_key)
+        klass.constantize.find( send(foreign_key) ).first
       end
     end
 
     def self.has_one(name, options = {})
+      name = name.to_s
+      options.reverse_merge! foreign_key: self.to_s.foreign_key.camelize
+      klass = "AutotaskAPI::#{(options[:class_name] || name).to_s.classify}"
+      define_method name do
+        klass.constantize.find(id, options[:foreign_key]).first
+      end
+    end
+
+    def self.has_many(name, options = {})
       name = name.to_s
       options.reverse_merge! foreign_key: self.to_s.foreign_key.camelize
       klass = "AutotaskAPI::#{(options[:class_name] || name).to_s.classify}"
