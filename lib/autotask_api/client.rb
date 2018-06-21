@@ -44,6 +44,14 @@ module AutotaskAPI
                       }
     end
 
+    def delete(xml)
+      savon_client.call :delete, message: "<Entities>#{xml}</Entities>",
+                        attributes: { xmlns: NAMESPACE },
+                        soap_header: {
+                            'tns:AutotaskIntegrations' => {'tns:IntegrationCode' => ENV['IntegrationCode']}
+                        }
+    end
+
     def entities_for(query)
       self.query = query
 
