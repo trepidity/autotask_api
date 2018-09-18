@@ -80,12 +80,16 @@ module AutotaskAPI
                         }
     end
 
-    def zone_info(user_name = nil)
+    def threshold_and_usage_info
+      savon_client.call :get_threshold_and_usage_info,
+                        soap_header: {
+                         'tns:AutotaskIntegrations' => {'tns:IntegrationCode' => ENV['IntegrationCode']}
+                        }
+    end
+
+    def zone_info(user_name)
       savon_client.call :get_zone_info,
-        message: { 'UserName' => user_name || basic_auth.first },
-                    soap_header: {
-                        'tns:AutotaskIntegrations' => {'tns:IntegrationCode' => ENV['IntegrationCode']}
-                    }
+        message: { 'UserName' => user_name }
     end
   end
 end
