@@ -5,7 +5,7 @@ module AutotaskAPI
     self.fields = [ :id, :account_id, :action_type, :activity_description,
                     :completed_date, :start_date_time, :end_date_time,
                     :contact_id, :creator_resource_id, :create_date_time,
-                    :assigned_to_resource_id, :last_modified_date ]
+                    :assigned_to_resource_id, :last_modified_date, :ticket_id ]
 
     belongs_to :account
     belongs_to :contact
@@ -14,6 +14,14 @@ module AutotaskAPI
     delegate :account_name, to: :account
     delegate :phone, :email, :full_name, to: :contact, prefix: true,
       allow_nil: true
+
+    def ticket
+      Ticket.find(self.ticket_id).first
+    end
+
+    def action
+      ActionType.find(self.action_type).first
+    end
 
     def set_title_and_description
       @title, @description = activity_description.to_s.split(/\r?\n/).
