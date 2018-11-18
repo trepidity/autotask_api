@@ -6,6 +6,7 @@ module AutotaskAPI
     def initialize
       yield self
       self.savon_client ||= Savon.client do |c|
+        c.ssl_verify_mode :none
         c.basic_auth basic_auth
         c.wsdl wsdl
         c.endpoint endpoint
@@ -15,6 +16,7 @@ module AutotaskAPI
         c.open_timeout 30
         c.logger Rails.logger
         c.ssl_version :TLSv1_2
+
       end
       Entity.client ||= self
     end
